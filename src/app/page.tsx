@@ -1,13 +1,14 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/QlNMBfWinu7
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
+import { db } from "@/lib/db";
 
-export default function Component() {
+export const dynamic = 'force-dynamic'
+
+export default async function Component() {
+
+  const posts = await db.post.findMany();
+
   return (
     <div className="flex flex-col min-h-screen">
       <header className="bg-background border-b shadow-sm sticky top-0 z-10">
@@ -39,108 +40,26 @@ export default function Component() {
         </div>
       </header>
       <main className="flex-1 container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 md:p-6">
-        <Link href="#" className="group relative overflow-hidden rounded-lg" prefetch={false}>
-          <Image
-            src="/gillermo.jpg"
-            width={400}
-            height={400}
-            alt="Photo"
-            className="w-full h-60 object-cover transition-all group-hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-black/50 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-            <div className="text-white text-sm font-medium">Sunset over the ocean</div>
-          </div>
-        </Link>
-        <Link href="#" className="group relative overflow-hidden rounded-lg" prefetch={false}>
-          <img
-            src="/gillermo.jpg"
-            width={400}
-            height={400}
-            alt="Photo"
-            className="w-full h-60 object-cover transition-all group-hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-black/50 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-            <div className="text-white text-sm font-medium">Autumn leaves in the park</div>
-          </div>
-        </Link>
-        <Link href="#" className="group relative overflow-hidden rounded-lg" prefetch={false}>
-          <img
-            src="/gillermo.jpg"
-            width={400}
-            height={400}
-            alt="Photo"
-            className="w-full h-60 object-cover transition-all group-hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-black/50 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-            <div className="text-white text-sm font-medium">Cityscape at night</div>
-          </div>
-        </Link>
-        <Link href="#" className="group relative overflow-hidden rounded-lg" prefetch={false}>
-          <img
-            src="/gillermo.jpg"
-            width={400}
-            height={400}
-            alt="Photo"
-            className="w-full h-60 object-cover transition-all group-hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-black/50 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-            <div className="text-white text-sm font-medium">Snowy mountain peak</div>
-          </div>
-        </Link>
-        <Link href="#" className="group relative overflow-hidden rounded-lg" prefetch={false}>
-          <img
-            src="/gillermo.jpg"
-            width={400}
-            height={400}
-            alt="Photo"
-            className="w-full h-60 object-cover transition-all group-hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-black/50 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-            <div className="text-white text-sm font-medium">Colorful street art</div>
-          </div>
-        </Link>
-        <Link href="#" className="group relative overflow-hidden rounded-lg" prefetch={false}>
-          <img
-            src="/gillermo.jpg"
-            width={400}
-            height={400}
-            alt="Photo"
-            className="w-full h-60 object-cover transition-all group-hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-black/50 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-            <div className="text-white text-sm font-medium">Serene lake reflection</div>
-          </div>
-        </Link>
-        <Link href="#" className="group relative overflow-hidden rounded-lg" prefetch={false}>
-          <img
-            src="/gillermo.jpg"
-            width={400}
-            height={400}
-            alt="Photo"
-            className="w-full h-60 object-cover transition-all group-hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-black/50 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-            <div className="text-white text-sm font-medium">Vibrant flower garden</div>
-          </div>
-        </Link>
-        <Link href="#" className="group relative overflow-hidden rounded-lg" prefetch={false}>
-          <img
-            src="/gillermo.jpg"
-            width={400}
-            height={400}
-            alt="Photo"
-            className="w-full h-60 object-cover transition-all group-hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-black/50 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-            <div className="text-white text-sm font-medium">Majestic mountain range</div>
-          </div>
-        </Link>
+        {posts.map((post) => (
+          <Link key={post.id} href="#" className="group relative overflow-hidden rounded-lg">
+            <img
+              src={post.pictureUrl}
+              width={400}
+              height={400}
+              alt="Photo"
+              className="w-full h-60 object-cover transition-all group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-black/50 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="text-white text-sm font-medium">{post.pictureUrl}</div>
+            </div>
+          </Link>
+        ))}
       </main>
     </div>
   )
 }
 
-function CameraIcon(props) {
+function CameraIcon(props: any) {
   return (
     <svg
       {...props}
@@ -161,7 +80,7 @@ function CameraIcon(props) {
 }
 
 
-function SearchIcon(props) {
+function SearchIcon(props: any) {
   return (
     <svg
       {...props}
