@@ -11,6 +11,7 @@ model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
   name  String?
+
 }
 
 model Post {
@@ -18,5 +19,5 @@ model Post {
   pictureUrl  String
   description String?
   published   Boolean @default(false)
-  authorId    Int
+  authorId    String
 }

@@ -3,6 +3,9 @@ import { Input } from "@/components/ui/input"
 import Image from "next/image"
 import { db } from "@/lib/db";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
+import { UploadButton } from "@/lib/utils/uploadthing";
+import { UploadImageButton } from "./_components/upload-button";
 
 export const dynamic = 'force-dynamic'
 
@@ -13,7 +16,7 @@ export default async function Component() {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="bg-background border-b shadow-sm sticky top-0 z-10">
-        <div className="container flex items-center justify-between h-14 px-4 md:px-6">
+        <div className="container flex items-center justify-between h-20 px-4 md:px-6">
           <Link href="#" className="flex items-center gap-2" prefetch={false}>
             <CameraIcon className="w-6 h-6" />
             <span className="font-medium text-lg">Photo Gallery</span>
@@ -26,25 +29,19 @@ export default async function Component() {
               Explore
             </Link>
             <Link href="#" className="text-sm font-medium hover:underline" prefetch={false}>
-              Upload
-            </Link>
-            <Link href="#" className="text-sm font-medium hover:underline" prefetch={false}>
               Profile
             </Link>
           </nav>
           <div className="flex items-center gap-2">
-            <div className="relative flex-1 max-w-md">
-              <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground">
-                <SearchIcon className="w-4 h-4" />
+            <SignedIn>
+              <div className="flex items-center gap-2">
+                <UploadImageButton />
+                <UserButton />
               </div>
-              <Input type="search" placeholder="Search photos..." className="w-full rounded-lg bg-background pl-8" />
-            </div>
+            </SignedIn>
             <SignedOut>
               <SignInButton />
             </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
           </div>
 
         </div>
