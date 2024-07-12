@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
 import { db } from "@/lib/db";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 export const dynamic = 'force-dynamic'
 
@@ -31,12 +32,21 @@ export default async function Component() {
               Profile
             </Link>
           </nav>
-          <div className="relative flex-1 max-w-md">
-            <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground">
-              <SearchIcon className="w-4 h-4" />
+          <div className="flex items-center gap-2">
+            <div className="relative flex-1 max-w-md">
+              <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground">
+                <SearchIcon className="w-4 h-4" />
+              </div>
+              <Input type="search" placeholder="Search photos..." className="w-full rounded-lg bg-background pl-8" />
             </div>
-            <Input type="search" placeholder="Search photos..." className="w-full rounded-lg bg-background pl-8" />
+            <SignedOut>
+              <SignInButton />
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
           </div>
+
         </div>
       </header>
       <main className="flex-1 container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 md:p-6">

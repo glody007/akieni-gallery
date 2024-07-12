@@ -3,7 +3,7 @@
 export default function ChrisPage() {
   return (
     <div>
-      <h1>Chris</h1>
+      <h1>Dashboard</h1>
     </div>
   );
 }
